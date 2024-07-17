@@ -3,12 +3,24 @@ const operations=document.querySelectorAll('.op');
 const equalBtn=document.querySelector('#equal');
 const display=document.querySelector('.display');
 const clearBtn=document.querySelector('#clear');
-
+const signBtn=document.querySelector('#sign');
 
 let numStr='';
 let operator='';
 let operand1=null;
 let operand2=null;
+
+signBtn.addEventListener('click',()=>{
+    if(numStr){
+        if(numStr.includes('-')){
+            numStr=numStr.substring(1);
+        }else{
+            numStr= '-'+numStr;
+        }
+        display.textContent=numStr
+    }
+});
+
 
 numbers.forEach(number => {
     number.addEventListener('click',(e)=>{
@@ -59,7 +71,9 @@ function equal(){
     operand1=calculate(operand1,operand2,operator);
     
     display.textContent='';
-    display.textContent=operand1;
+    
+    if(operand1 === Infinity) display.textContent="fr? 💀"
+    else display.textContent=operand1;
 
     operand2=null;
     operator='';
