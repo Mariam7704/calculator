@@ -1,3 +1,5 @@
+@import url('https://fonts.cdnfonts.com/css/calculator');
+
 body{
     display: flex;
     justify-content: center;
@@ -26,7 +28,10 @@ body{
     border: 3px solid #6962AD;
     border-radius: 10px;
     background-color: #B6FFFA;
-    font-size: 24px;
+    font-size: 48px;
+    font-weight: bold;
+    text-align: right;
+    font-family: 'Calculator', sans-serif;
 }
 
 
