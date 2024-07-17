@@ -1,6 +1,6 @@
 const numbers=document.querySelectorAll('.num');
 const operations=document.querySelectorAll('.op');
-const equal=document.querySelector('#equal');
+const equalBtn=document.querySelector('#equal');
 const display=document.querySelector('.display');
 const clearBtn=document.querySelector('#clear');
 
@@ -20,49 +20,52 @@ numbers.forEach(number => {
 
 operations.forEach(operation=>{
     operation.addEventListener('click',(e)=>{
-        operand1= +numStr;
-        operator=e.target.textContent;
-        display.textContent='';
-        display.textContent=operator;
+        if(operator){
+            equal();
+            operator=e.target.textContent;
+        }else{
+            operator=e.target.textContent;
+            
+            if(!operand1) operand1= +numStr;
+            else operand2= +numStr;
+            
+            display.textContent='';
+            display.textContent=operator;
+        }
         numStr='';
     });
 });
 
 
-
-
 function calculate(op1,op2,operator){
-    
-    console.log(`calculating: ${op1} ${operator} ${op2}` )
-    
-    let result=0;
     switch(operator){
     case '+':
-        result=op1+op2;
-        break;
+        return op1+op2;
     case '-':
-        result=op1-op2;
-        break;
+        return op1-op2;
     case '*':
-        result=op1*op2;
-        break;
+        return op1*op2;
     case '/':
-        result=op1/op2;
-        break;
+        return op1/op2;
     case '%':
-        result=op1%op2;
+        return op1%op2;
 }
-display.textContent='';
-display.textContent=result;
-
-return result;
 }
 
-equal.addEventListener('click',()=>{
+function equal(){
     operand2= +numStr;
     numStr='';
-    calculate(operand1,operand2,operator);
-});
+
+    operand1=calculate(operand1,operand2,operator);
+    
+    display.textContent='';
+    display.textContent=operand1;
+
+    operand2=null;
+    operator='';
+}
+
+equalBtn.addEventListener('click',equal);
 
 
 clearBtn.addEventListener('click',clear);
