@@ -4,11 +4,51 @@ const equalBtn=document.querySelector('#equal');
 const display=document.querySelector('.display');
 const clearBtn=document.querySelector('#clear');
 const signBtn=document.querySelector('#sign');
+const fPointBtn=document.querySelector('#fPoint');
+
+const keyMap={
+    '0': '#zero',
+    '1': '#one',
+    '2': '#two',
+    '3': '#three',
+    '4': '#four',
+    '5': '#five',
+    '6': '#six',
+    '7': '#seven',
+    '8': '#eight',
+    '9': '#nine',
+    '+': '#plus',
+    '-': '#minus',
+    '*': '#multiplication',
+    '/': '#division',
+    '%': '#mod',
+    '.':'#fPointBtn',
+    '_':'#sign',
+    'Enter': '#equalBtn',
+    'Escape': '#clearBtn'
+};
 
 let numStr='';
 let operator='';
 let operand1=null;
 let operand2=null;
+
+
+document.addEventListener('keydown', (e) => {
+    if (keyMap[e.key]) {
+        document.querySelector(keyMap[e.key]).click();
+    }
+});
+
+fPointBtn.addEventListener('click',()=>{
+    if(numStr){
+        if(!numStr.includes('.')){
+        numStr+='.';
+        display.textContent=numStr;
+        }
+    }
+});
+
 
 signBtn.addEventListener('click',()=>{
     if(numStr){
@@ -24,8 +64,10 @@ signBtn.addEventListener('click',()=>{
 
 numbers.forEach(number => {
     number.addEventListener('click',(e)=>{
+        if(numStr.length<20){
         numStr+=e.target.textContent;
         display.textContent=numStr;
+        }
     });
 });
 
@@ -69,6 +111,7 @@ function equal(){
     numStr='';
 
     operand1=calculate(operand1,operand2,operator);
+    operand1=Number(operand1.toPrecision(20));
     
     display.textContent='';
     
